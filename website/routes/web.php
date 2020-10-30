@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'MainPageController@home');
+Route::post('/questions', 'MainPageController@storequestion');
+Route::post('/answers', 'MainPageController@storeanswer');
+Route::get('/{type}', 'MainPageController@show');
