@@ -26,6 +26,16 @@ body {
     color: #c83349;
 }
 
+.questions{
+    max-width: 500px;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.answer_count{
+    font-size: 10px;
+    text-align: right;
+}
 
 /* got the button here https://fdossena.com/?p=html5cool/buttons/i.frag */
 button.button4{

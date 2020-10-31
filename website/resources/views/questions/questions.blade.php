@@ -2,7 +2,7 @@
 @extends('layout')
 
 @section('title')
-    <h1>{{ $header }}</h1>
+    <a href='/questions' class="colour3"><h1>{{ $header }}</h1></a>
 @endsection('title')
 
 @section('content')
@@ -27,10 +27,11 @@
             foreach($posts as $post){
                 $address = '/'.strval($post->id);
                 $count = Answer::where('q_id', $post->id)->get()->count();
+                $count_text = strval($count).' answers';
                 $colours = array("colour1", "colour2", "colour3", "colour4");
                 $random = array_rand($colours, 1);
                 $random_colour = $colours[$random];
-                echo "<a href=$address class=$random_colour>$post->body</a><br>";
+                echo "<div class='questions'><a href=$address class=$random_colour>$post->body</a><br><div class='answer_count'>$count_text</div></div>";
             }
         }
         else{
@@ -38,7 +39,7 @@
            if(!is_null($question_post)){
                $posts = Answer::where('q_id', $question_post->id)->get();
                foreach($posts as $post){
-                   echo "$post->body<br>";
+                   echo "<div class='questions'>$post->body</div>";
                }
            }
             
