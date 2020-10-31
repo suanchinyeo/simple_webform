@@ -1,18 +1,21 @@
 
 @extends('layout')
 
-@section('content')
+@section('title')
     <h1>{{ $header }}</h1>
+@endsection('title')
+
+@section('content')
     <form method="POST" action={{$type}}>
         @csrf
         <input name="q_id" type="hidden" value={{$q_id ?? ''}}>
         <div class="field">
             <div class="control">
-                <textarea class="textarea" name="body" id="body">{{ $placeholder_form }}</textarea>
+            <textarea rows=5 cols=50 class="textarea" name="body" id="body" placeholder="<?php echo $placeholder_form ?>"></textarea>
             </div>
         </div>
         <div class="control">
-            <button class="button is-text">{{ $button }}</button>
+            <button class="button4" style="background-color:#f14ebd">{{ $button }}</button>
         </div>
     </form>
     <?php
@@ -23,7 +26,11 @@
             $posts = Question::all();
             foreach($posts as $post){
                 $address = '/'.strval($post->id);
-                echo "<a href=$address>$post->body</a><br>";
+                $count = Answer::where('q_id', $post->id)->get()->count();
+                $colours = array("colour1", "colour2", "colour3", "colour4");
+                $random = array_rand($colours, 1);
+                $random_colour = $colours[$random];
+                echo "<a href=$address class=$random_colour>$post->body</a><br>";
             }
         }
         else{
@@ -37,5 +44,4 @@
             
         }
     ?>
-
 @endsection('content')

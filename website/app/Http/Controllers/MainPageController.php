@@ -46,6 +46,11 @@ class MainPageController extends Controller
     }
 
     public function storequestion(){
+
+        $validatedData = request()->validate([
+            'body' => 'required',
+        ]);
+
         $question = new Question();
         $new_question = request('body');
         $exists = Question::where('body', $new_question)->first();
@@ -59,6 +64,11 @@ class MainPageController extends Controller
     }
 
     public function storeanswer(){
+
+        $validatedData = request()->validate([
+            'body' => 'required',
+        ]);
+
         $answer = new Answer();
         $new_answer = request('body');
         $q_id = request('q_id');
