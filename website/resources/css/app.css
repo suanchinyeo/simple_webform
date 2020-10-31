@@ -10,6 +10,11 @@ body {
     color: pink;
 } */
 
+.error_message{
+    color: red;
+    font-size: 11px;
+}
+
 .colour1:hover {
     color: #f9d5e5;
 }

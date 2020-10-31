@@ -45,11 +45,22 @@ class MainPageController extends Controller
         return $this->show("questions");
     }
 
+    public function validate_form($request, $input_type){
+        if ($input_type === "questions"){
+            $validation = $request->validate(
+                ['body' => ['required', 'min:5', 'ends_with:?']]
+            );
+        }else{
+            $validation = $request->validate(
+                ['body' => ['required', 'min:5']]
+            );
+        }
+        return $validation;
+    }
+
     public function storequestion(){
 
-        $validatedData = request()->validate([
-            'body' => 'required',
-        ]);
+        $this->validate_form(request(), "questions");
 
         $question = new Question();
         $new_question = request('body');
@@ -59,15 +70,13 @@ class MainPageController extends Controller
 
             $question->save();
         }
-
-        return $this->show("questions");
+        
+        return redirect('/questions');
     }
 
     public function storeanswer(){
 
-        $validatedData = request()->validate([
-            'body' => 'required',
-        ]);
+        $this->validate_form(request(), "answers");
 
         $answer = new Answer();
         $new_answer = request('body');
@@ -80,7 +89,7 @@ class MainPageController extends Controller
             $answer->save();
         }
 
-        return $this->show($q_id);
+        return redirect('/'.'q_id');
 
     }
 }

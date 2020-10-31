@@ -11,7 +11,10 @@
         <input name="q_id" type="hidden" value={{$q_id ?? ''}}>
         <div class="field">
             <div class="control">
-            <textarea rows=5 cols=50 class="textarea" name="body" id="body" placeholder="<?php echo $placeholder_form ?>"></textarea>
+            <textarea rows=5 cols=50 class="textarea" name="body" id="body" placeholder="<?php echo $placeholder_form ?>">{{ old('body') }}</textarea>
+            @if ($errors->has('body'))
+                <p class="error_message">{{ $errors->first('body') }}</p>
+            @endif
             </div>
         </div>
         <div class="control">
@@ -23,7 +26,7 @@
         use App\Models\Answer;
 
         if ($type === "/questions"){
-            $posts = Question::all();
+            $posts = Question::all()->sortByDesc("id");
             foreach($posts as $post){
                 $address = '/'.strval($post->id);
                 $count = Answer::where('q_id', $post->id)->get()->count();
@@ -37,7 +40,7 @@
         else{
            $question_post = Question::where('body', $header)->first();
            if(!is_null($question_post)){
-               $posts = Answer::where('q_id', $question_post->id)->get();
+               $posts = Answer::where('q_id', $question_post->id)->get()->sortBy("id");
                foreach($posts as $post){
                    echo "<div class='questions'>$post->body</div>";
                }
